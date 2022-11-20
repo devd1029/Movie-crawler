@@ -79,5 +79,6 @@ namespace Global_Cinema.Controllers
 
             return RedirectToAction("Index");
         }
+
     }
 }

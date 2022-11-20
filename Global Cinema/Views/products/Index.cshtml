@@ -56,9 +56,9 @@
         </td>
         <td style="display:inline-block">
             
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id },new{@class="fa fa-edit"}) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id },new { @class= "fa fa-newspaper-o" }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "fa fa-trash-o" })
                
         </td>
     </tr>
