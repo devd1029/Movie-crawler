@@ -129,6 +129,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportMoviesController.cs" />
     <Compile Include="Controllers\productsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -142,9 +143,13 @@
       <DependentUpon>202211192050292_move-migrator.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\bulkImport.cs" />
     <Compile Include="Models\bulkMovie.cs" />
+    <Compile Include="Models\C__MigrationHistory.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\movieContext.cs" />
+    <Compile Include="Models\movieTable.cs" />
+    <Compile Include="Models\Root.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +192,11 @@
     <Content Include="Views\products\AddMovies.cshtml" />
     <Content Include="Views\products\Create.cshtml" />
     <Content Include="Views\products\Edit.cshtml" />
+    <Content Include="Views\ImportMovies\Create.cshtml" />
+    <Content Include="Views\ImportMovies\Delete.cshtml" />
+    <Content Include="Views\ImportMovies\Details.cshtml" />
+    <Content Include="Views\ImportMovies\Edit.cshtml" />
+    <Content Include="Views\ImportMovies\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
