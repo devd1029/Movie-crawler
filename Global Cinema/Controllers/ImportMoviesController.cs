@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using Global_Cinema.Models;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Global_Cinema.Controllers
 {
@@ -26,16 +27,38 @@ namespace Global_Cinema.Controllers
 
         public ActionResult BulkImport(string Url,string header_title, string header_value)
         {
+            List<bulkMovie> blkList = new List<bulkMovie>();
             var request = (HttpWebRequest)WebRequest.Create(Url);
             request.Headers[header_title] = header_value;
             var response = (HttpWebResponse)request.GetResponse();
 
             var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            var jsonObj = JsonConvert.DeserializeObject(responseString);
-            bulkMovie blk = new bulkMovie();
+            var objects = JsonConvert.DeserializeObject<Root>(responseString);
+            var joResponse = JObject.Parse(responseString);
             
-            return View(responseString);
 
+            // get JSON result objects into a list
+            IList<JToken> results = joResponse["data"]["items"].Children().ToList();
+
+            // serialize JSON results into .NET objects
+            IList<bulkMovie> searchResults = new List<bulkMovie>();
+            foreach (JToken result in results)
+            {
+                var x1 = result.Values().ToList();
+                bulkMovie bulk = new bulkMovie(result);   
+                // JToken.ToObject is a helper method that uses JsonSerializer internally
+                
+                searchResults.Add(bulk);
+            }
+
+            var values = JsonConvert.DeserializeObject<Dictionary<object,object>>(responseString);
+            dynamic MyDynamic = JsonConvert.DeserializeObject<Dictionary<object, object>>(responseString);
+            JObject ojObject = (JObject)joResponse;
+
+            
+
+            return View(objects);
+                    
         }
         // GET: ImportMovies/Details/5
         public ActionResult Details(int? id)
