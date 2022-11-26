@@ -80,5 +80,37 @@ namespace Global_Cinema.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: ImportMovies/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Movie movie = mContext.movieTable.Find(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                mContext.movieTable.Remove(movie);
+                mContext.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(movie);
+        }
+
+        // POST: ImportMovies/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Movie movie = mContext.movieTable.Find(id);
+            mContext.movieTable.Remove(movie);
+            mContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
     }
 }

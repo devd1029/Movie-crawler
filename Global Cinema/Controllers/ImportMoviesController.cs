@@ -35,22 +35,26 @@ namespace Global_Cinema.Controllers
             var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
             var objects = JsonConvert.DeserializeObject<Root>(responseString);
             var joResponse = JObject.Parse(responseString);
+
             
 
             // get JSON result objects into a list
             IList<JToken> results = joResponse["data"]["items"].Children().ToList();
 
             // serialize JSON results into .NET objects
-            IList<bulkMovie> searchResults = new List<bulkMovie>();
+            IList<Movie> searchResults = new List<Movie>();
             foreach (JToken result in results)
             {
                 var x1 = result.Values().ToList();
-                bulkMovie bulk = new bulkMovie(result);   
-                // JToken.ToObject is a helper method that uses JsonSerializer internally
-                
-                searchResults.Add(bulk);
-            }
 
+                Movie movie = new Movie(result);
+                // JToken.ToObject is a helper method that uses JsonSerializer internally
+
+                db.movieTable.Add(movie);
+                db.SaveChanges();
+                
+            }
+            return RedirectToAction("Index");
             var values = JsonConvert.DeserializeObject<Dictionary<object,object>>(responseString);
             dynamic MyDynamic = JsonConvert.DeserializeObject<Dictionary<object, object>>(responseString);
             JObject ojObject = (JObject)joResponse;
@@ -140,6 +144,12 @@ namespace Global_Cinema.Controllers
             if (movie == null)
             {
                 return HttpNotFound();
+            }
+            else
+            {
+                db.movieTable.Remove(movie);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
             return View(movie);
         }

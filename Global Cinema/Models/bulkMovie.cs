@@ -28,12 +28,13 @@ namespace Global_Cinema.Models
             this.result = result;
             foreach(var item in result)
             {
-                Title = item.Children()["title"].ToString();
-                Description = item.Children()["description"].ToString();
-                genre = item.Children()["genre"][0].ToString();
-                uri = item.Children()["uri"].ToString();
-                imageUrl = item.Children()["images"][0].ToString();
-                ImageSlides = item.Children()["images"].ToList();
+                Title = item.Value<string>("title");
+                Description = item.Value<string>("description");
+                
+
+                
+                uri = item.Value<string>("uri").ToString();
+                imageUrl = item.Value<string>("images")[0].ToString();
             }
            
         }
